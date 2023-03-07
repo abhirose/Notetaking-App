@@ -91,6 +91,7 @@ class MainWindow(QMainWindow):
         container = QWidget()
         container.setLayout(layout)
         container.setStyleSheet("background-color: whitesmoke")
+        container.setFixedWidth(1000)
         self.setCentralWidget(container)
 
         self.status = QStatusBar()
@@ -269,10 +270,10 @@ class MainWindow(QMainWindow):
         format_group.addAction(self.alignj_action)
 
         ########### create notebook, section, pages ##############
-        notebook_toolbar = QToolBar("Notebook")
+        notebook_toolbar = QToolBar("Insert")
         notebook_toolbar.setIconSize(QSize(14, 14))
         self.addToolBar(notebook_toolbar)
-        notebook_menu = self.menuBar().addMenu("&Notebook")
+        notebook_menu = self.menuBar().addMenu("&Insert")
         notebook_menu.setStyleSheet("color: darkslategray;" "background-color: lightgrey;" "selection-color: white;" "selection-background-color: lightgreen;")
         
         self.setStyleSheet("""
@@ -303,14 +304,14 @@ class MainWindow(QMainWindow):
         }
     """)
 
-        new_notebook = QAction(QIcon(os.path.join('images', 'blue-folder-open-document.png')), "New Notebook", self)
-        new_notebook.setStatusTip("Create a new notebook")
+        new_notebook = QAction(QIcon(os.path.join('images', 'blue-folder-open-document.png')), "Drawing Tool", self)
+        new_notebook.setStatusTip("Draw images on to the page")
         new_notebook.setCheckable(True)
         #the triggering event should go here
         notebook_menu.addAction(new_notebook)
 
-        delete_notebook = QAction(QIcon(os.path.join('images', 'blue-folder-open-document.png')), "Remove Notebook", self)
-        delete_notebook.setStatusTip("Removing current notebook")
+        delete_notebook = QAction(QIcon(os.path.join('images', 'blue-folder-open-document.png')), "Video Player", self)
+        delete_notebook.setStatusTip("Open a video player")
         delete_notebook.setCheckable(True)
         #the triggering event should go here
         notebook_menu.addAction(delete_notebook)
