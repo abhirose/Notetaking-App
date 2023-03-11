@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="png">
+    <file>icons8-menu-16.png</file>
+  </qresource>
+  <qresource prefix="png">
+    <file>icons8-resize-horizontal-16.png</file>
+  </qresource>
+</RCC>
