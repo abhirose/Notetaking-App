@@ -7,12 +7,12 @@ import os
 import sys
 
 class TextBox(QWidget):
-    def __init__(self):
+    def __init__(self, size = 16):
         super().__init__()
         self.ui = Ui_Textbox()
         self.ui.setupUi(self)
         self.ui.Box.setWindowFlags(Qt.SubWindow)
-        self.textpos = 24
+        self.fontsize = size
         self.Start()
     def Start(self):
         self.ui.MeatballIcon.mousePressEvent = self.mouseDragButton
@@ -34,16 +34,16 @@ class TextBox(QWidget):
     def ResizeTextPortion(self, event): #Doesnt count for font size yet
         if(self.textpos < self.ui.textEditor.document().size().height()):
             self.textpos = self.ui.textEditor.document().size().height()
-            self.ui.Box.resize(self.ui.Box.width(), self.ui.Box.height() + 16)
-            self.ui.BottomFrame.resize(self.ui.BottomFrame.width(), self.ui.BottomFrame.height() + 16)
-            self.ui.textEditor.resize(self.ui.textEditor.width(), int(self.ui.textEditor.document().size().height() + 16))
+            self.ui.Box.resize(self.ui.Box.width(), self.ui.Box.height() + self.fontsize)
+            self.ui.BottomFrame.resize(self.ui.BottomFrame.width(), self.ui.BottomFrame.height() + self.fontsize)
+            self.ui.textEditor.resize(self.ui.textEditor.width(), int(self.ui.textEditor.document().size().height() + self.fontsize))
             self.ui.textEditor.updateGeometry()
             self.ui.textEditor.ensureCursorVisible()
         elif(self.textpos > self.ui.textEditor.document().size().height()):
             self.textpos = self.ui.textEditor.document().size().height()
-            self.ui.Box.resize(self.ui.Box.width(), self.ui.Box.height() - 16)
-            self.ui.BottomFrame.resize(self.ui.BottomFrame.width(), self.ui.BottomFrame.height() - 16)
-            self.ui.textEditor.resize(self.ui.textEditor.width(), int(self.ui.textEditor.height() - 16))
+            self.ui.Box.resize(self.ui.Box.width(), self.ui.Box.height() - self.fontsize)
+            self.ui.BottomFrame.resize(self.ui.BottomFrame.width(), self.ui.BottomFrame.height() - self.fontsize)
+            self.ui.textEditor.resize(self.ui.textEditor.width(), int(self.ui.textEditor.height() - self.fontsize))
             self.ui.Box.updateGeometry()
             self.ui.BottomFrame.updateGeometry()
             self.ui.textEditor.updateGeometry()
