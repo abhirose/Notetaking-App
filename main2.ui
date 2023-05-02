@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1057</width>
-    <height>711</height>
+    <width>1060</width>
+    <height>710</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -223,9 +223,7 @@ color: rgb(255, 255, 255);</string>
      <bool>true</bool>
     </property>
     <property name="currentFont">
-     <font>
-      <kerning>true</kerning>
-     </font>
+     <font/>
     </property>
    </widget>
    <widget class="QSpinBox" name="fontSize">
@@ -483,7 +481,7 @@ background-color: rgb(234, 234, 234);</string>
    <widget class="QTabWidget" name="tabs">
     <property name="geometry">
      <rect>
-      <x>190</x>
+      <x>182</x>
       <y>180</y>
       <width>891</width>
       <height>531</height>
@@ -522,7 +520,7 @@ background-color: rgb(234, 234, 234);</string>
      <bool>true</bool>
     </property>
     <property name="documentMode">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
     <property name="tabsClosable">
      <bool>false</bool>
@@ -537,12 +535,54 @@ background-color: rgb(234, 234, 234);</string>
      <attribute name="title">
       <string>Tab 1</string>
      </attribute>
+     <widget class="QTextEdit" name="canvas">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>881</width>
+        <height>511</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
       <string>Tab 2</string>
      </attribute>
+     <widget class="QTextEdit" name="canvas_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>881</width>
+        <height>511</height>
+       </rect>
+      </property>
+     </widget>
     </widget>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>6</x>
+      <y>6</y>
+      <width>151</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Bahnschrift Light SemiCondensed</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="text">
+     <string>Created by Team Brute Force</string>
+    </property>
    </widget>
   </widget>
  </widget>
