@@ -11,7 +11,7 @@ import uuid
 class NewMain(QMainWindow):
     def __init__(self, *args, **kwargs):
         super(NewMain, self).__init__(*args, **kwargs)
-        uic.loadUi("mainScreen.ui", self)
+        uic.loadUi("draw2.ui", self)
         self.show()
 
 if __name__ == '__main__':
