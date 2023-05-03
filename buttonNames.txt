@@ -1,0 +1,28 @@
+Type   Variable Name
+
+Bold = boldButton
+Underline = underlineButton
+Italics = italicsButton
+
+Font Color = fontColor
+Font Size = fontSize
+Font Scroll Down = fontType
+
+Draw Tab = drawButton
+Home Tab = homeButton
+Insert Tab = insertButton
+
+Left Align = leftAlign
+Middle Align = middleAlign ( will use justify code probably)
+Center Align = centerAlign
+
+New Notebook = addNotebook
+
+Tab 1 = tab 
+Text Editor = canvas (Each tab holds its own text editor, might be a problem later)
+
+Tab 2 = tab_2
+Text Editor 2 = canvas_2
+
+
+
