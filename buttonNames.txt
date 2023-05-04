@@ -25,4 +25,18 @@ Tab 2 = tab_2
 Text Editor 2 = canvas_2
 
 
+--- FOR THE DRAW SCREEN ---
+Size 1 = pix1
+Size 2 = pix2
+Size 4 = pix4
+Size 7 = pix7
+Size 9 = pix9
+Size 12 = pix12
+
+Color Red = redButton
+Color White = whiteButton
+Color Black = blackButton
+Color Green = greenButton
+Color Blue = blueButton
+Color Yellow = yellowButton
 

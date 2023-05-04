@@ -18,12 +18,56 @@ def hexuuid():
 def splitext(p):
     return os.path.splitext(p)[1].lower()
 
+class TextEdit(QTextEdit):
+
+    def canInsertFromMimeData(self, source):
+
+        if source.hasImage():
+            return True
+        else:
+            return super(TextEdit, self).canInsertFromMimeData(source)
+
+    def insertFromMimeData(self, source):
+
+        cursor = self.textCursor()
+        document = self.document()
+
+        if source.hasUrls():
+
+            for u in source.urls():
+                file_ext = splitext(str(u.toLocalFile()))
+                if u.isLocalFile() and file_ext in IMAGE_EXTENSIONS:
+                    image = QImage(u.toLocalFile())
+                    document.addResource(QTextDocument.ImageResource, u, image)
+                    cursor.insertImage(u.toLocalFile())
+
+                else:
+                    # If we hit a non-image or non-local URL break the loop and fall out
+                    # to the super call & let Qt handle it
+                    break
+
+            else:
+                # If all were valid images, finish here.
+                return
+
+
+        elif source.hasImage():
+            image = source.imageData()
+            uuid = hexuuid()
+            document.addResource(QTextDocument.ImageResource, uuid, image)
+            cursor.insertImage(uuid)
+            return
+
+        super(TextEdit, self).insertFromMimeData(source)
+
+
 class NewMain(QMainWindow):
     def __init__(self, *args, **kwargs):
         super(NewMain, self).__init__(*args, **kwargs)
         uic.loadUi("main2.ui", self)
         self.show()
 
+    
         self.canvas.setAutoFormatting(QTextEdit.AutoAll)
         self.canvas.selectionChanged.connect(self.update_format)
         # Initialize default font size.
@@ -41,6 +85,30 @@ class NewMain(QMainWindow):
         self.boldButton.setShortcut(QKeySequence.Bold)
         self.boldButton.setCheckable(True)
         self.boldButton.toggled.connect(lambda x: self.canvas.setFontWeight(QFont.Bold if x else QFont.Normal))
+
+        self.italicsButton.setShortcut(QKeySequence.Italic)
+        self.italicsButton.setCheckable(True)
+        self.italicsButton.toggled.connect(self.canvas.setFontItalic)
+
+        self.underlineButton.setShortcut(QKeySequence.Underline)
+        self.underlineButton.setCheckable(True)
+        self.underlineButton.toggled.connect(self.canvas.setFontUnderline)
+
+        self.leftAlign.setCheckable(True)
+        self.leftAlign.toggled.connect(lambda: self.canvas.setAlignment(Qt.AlignLeft))
+
+        self.centerAlign.setCheckable(True)
+        self.centerAlign.toggled.connect(lambda: self.canvas.setAlignment(Qt.AlignCenter))
+
+        #self.rightAlign.setCheckable(True)
+        #self.rightAlign.toggled.connect(lambda: self.canvas.setAlignment(Qt.AlignRight))
+
+        self.middleAlign.setCheckable(True)
+        self.middleAlign.toggled.connect(lambda: self.canvas.setAlignment(Qt.AlignJustify))
+        
+        
+        
+        
 
 
 
@@ -61,23 +129,29 @@ class NewMain(QMainWindow):
         # Nasty, but we get the font-size as a float but want it was an int
         self.fontSize.setCurrentText(str(int(self.canvas.fontPointSize())))
 
-        self.italic_action.setChecked(self.canvas.fontItalic())
-        self.underline_action.setChecked(self.canvas.fontUnderline())
+        self.italicsButton.setChecked(self.canvas.fontItalic())
+        self.underlineButton.setChecked(self.canvas.fontUnderline())
         self.boldButton.setChecked(self.canvas.fontWeight() == QFont.Bold)
 
-        self.alignl_action.setChecked(self.canvas.alignment() == Qt.AlignLeft)
-        self.alignc_action.setChecked(self.canvas.alignment() == Qt.AlignCenter)
-        self.alignr_action.setChecked(self.canvas.alignment() == Qt.AlignRight)
-        self.alignj_action.setChecked(self.canvas.alignment() == Qt.AlignJustify)
+        self.leftAlign.setChecked(self.canvas.alignment() == Qt.AlignLeft)
+        self.centerAlign.setChecked(self.canvas.alignment() == Qt.AlignCenter)
+        #self.alignr_action.setChecked(self.canvas.alignment() == Qt.AlignRight)
+        self.middleAlign.setChecked(self.canvas.alignment() == Qt.AlignJustify)
 
         #self.block_signals(self._format_actions, False)
 
-    
-
+"""
+WILL HAVE TO PUT THEM IN STACKED WIDGET TO WORK IN JUST ONE SCREEN
+class DrawScreen(QMainWindow):
+    def __init__(self, *args, **kwargs):
+        super(DrawScreen, self).__init__(*args, **kwargs)
+        uic.loadUi("draw2.ui", self)
+        self.show()
+"""
 if __name__ == '__main__':
 
     app = QApplication(sys.argv)
-    app.setApplicationName("Megasolid Idiom")
+    app.setApplicationName("CloneNote")
 
     window = NewMain()
     app.exec_()
