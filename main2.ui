@@ -60,7 +60,7 @@ color: rgb(255, 255, 255);</string>
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="insertButton">
+   <widget class="QToolButton" name="insertButton">
     <property name="geometry">
      <rect>
       <x>112</x>
@@ -86,8 +86,11 @@ color: rgb(255, 255, 255);</string>
     <property name="text">
      <string>Insert</string>
     </property>
-    <property name="flat">
-     <bool>true</bool>
+    <property name="popupMode">
+     <enum>QToolButton::InstantPopup</enum>
+    </property>
+    <property name="toolButtonStyle">
+     <enum>Qt::ToolButtonTextOnly</enum>
     </property>
    </widget>
    <widget class="QPushButton" name="drawButton">
