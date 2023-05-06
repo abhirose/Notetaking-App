@@ -3,8 +3,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtPrintSupport import *
-from main_interface import *
-from TextBox_Tool import *
+
 
 import os
 import sys
@@ -66,50 +65,58 @@ class TextEdit(QTextEdit):
 class NewMain(QMainWindow):
     def __init__(self, *args, **kwargs):
         super(NewMain, self).__init__(*args, **kwargs)
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)
+        uic.loadUi("main2.ui", self)
+        self.show()
 
-        self.ui.canvas.setAutoFormatting(QTextEdit.AutoAll)
-        self.ui.canvas.selectionChanged.connect(self.update_format)
+
+        self.canvas.setAutoFormatting(QTextEdit.AutoAll)
+        self.canvas.selectionChanged.connect(self.update_format)
         # Initialize default font size.
         font = QFont('Times', 12)
-        self.ui.canvas.setFont(font)
+        self.canvas.setFont(font)
         # We need to repeat the size to init the current format.
-        self.ui.canvas.setFontPointSize(12)
+        self.canvas.setFontPointSize(12)
 
-        self.ui.fontType.currentFontChanged.connect(self.ui.canvas.setCurrentFont)
+        self.fontType.currentFontChanged.connect(self.canvas.setCurrentFont)
         
-        self.ui.fontSize = QComboBox()
-        self.ui.fontSize.addItems([str(s) for s in FONT_SIZES])
-        self.ui.fontSize.currentIndexChanged[str].connect(lambda s: self.ui.canvas.setFontPointSize(float(s)) )
+        self.fontSize.addItems([str(s) for s in FONT_SIZES])
+        self.fontSize.currentIndexChanged[str].connect(lambda s: self.canvas.setFontPointSize(float(s)) )
 
-        self.ui.boldButton.setShortcut(QKeySequence.Bold)
-        self.ui.boldButton.setCheckable(True)
-        self.ui.boldButton.toggled.connect(lambda x: self.ui.canvas.setFontWeight(QFont.Bold if x else QFont.Normal))
+        self.fontColor.clicked.connect(self.fontColorChange)
 
-        self.ui.italicsButton.setShortcut(QKeySequence.Italic)
-        self.ui.italicsButton.setCheckable(True)
-        self.ui.italicsButton.toggled.connect(self.ui.canvas.setFontItalic)
+        self.boldButton.setShortcut(QKeySequence.Bold)
+        self.boldButton.setCheckable(True)
+        self.boldButton.toggled.connect(lambda x: self.canvas.setFontWeight(QFont.Bold if x else QFont.Normal))
 
-        self.ui.underlineButton.setShortcut(QKeySequence.Underline)
-        self.ui.underlineButton.setCheckable(True)
-        self.ui.underlineButton.toggled.connect(self.ui.canvas.setFontUnderline)
+        self.italicsButton.setShortcut(QKeySequence.Italic)
+        self.italicsButton.setCheckable(True)
+        self.italicsButton.toggled.connect(self.canvas.setFontItalic)
 
-        self.ui.leftAlign.setCheckable(True)
-        self.ui.leftAlign.toggled.connect(lambda: self.ui.canvas.setAlignment(Qt.AlignLeft))
+        self.underlineButton.setShortcut(QKeySequence.Underline)
+        self.underlineButton.setCheckable(True)
+        self.underlineButton.toggled.connect(self.canvas.setFontUnderline)
 
-        self.ui.centerAlign.setCheckable(True)
-        self.ui.centerAlign.toggled.connect(lambda: self.ui.canvas.setAlignment(Qt.AlignCenter))
+        self.leftAlign.setCheckable(True)
+        self.leftAlign.toggled.connect(lambda: self.canvas.setAlignment(Qt.AlignLeft))
 
-        #self.rightAlign.setCheckable(True)
-        #self.rightAlign.toggled.connect(lambda: self.canvas.setAlignment(Qt.AlignRight))
+        self.centerAlign.setCheckable(True)
+        self.centerAlign.toggled.connect(lambda: self.canvas.setAlignment(Qt.AlignCenter))
 
-        self.ui.middleAlign.setCheckable(True)
-        self.ui.middleAlign.toggled.connect(lambda: self.ui.canvas.setAlignment(Qt.AlignJustify))
+        self.rightAlign.setCheckable(True)
+        self.rightAlign.toggled.connect(lambda: self.canvas.setAlignment(Qt.AlignRight))
 
-        insertmenu = QMenu("Insert Menu", self.ui.insertButton)
+        self.middleAlign.setCheckable(True)
+        self.middleAlign.toggled.connect(lambda: self.canvas.setAlignment(Qt.AlignJustify))
+
+
+
+        insertmenu = QMenu("Insert Menu", self.insertButton)
         insertmenu.addAction("Text Box", self.TextBoxInstance)
-        self.ui.insertButton.setMenu(insertmenu)
+        self.insertButton.setMenu(insertmenu)
+
+    def fontColorChange(self):
+        color = QColorDialog.getColor()
+        self.canvas.setTextColor(color)
 
     def TextBoxInstance(self):
         textbox = TextBox()
@@ -127,29 +134,29 @@ class NewMain(QMainWindow):
         :return:
         """
         # Disable signals for all format widgets, so changing values here does not trigger further formatting.
-        #self.ui.block_signals(self._format_actions, True)
+        #self.block_signals(self._format_actions, True)
 
-        self.ui.fontType.setCurrentFont(self.ui.canvas.currentFont())
+        self.fontType.setCurrentFont(self.canvas.currentFont())
         # Nasty, but we get the font-size as a float but want it was an int
-        self.ui.fontSize.setCurrentText(str(int(self.ui.canvas.fontPointSize())))
+        self.fontSize.setCurrentText(str(int(self.canvas.fontPointSize())))
 
-        self.ui.italicsButton.setChecked(self.ui.canvas.fontItalic())
-        self.ui.underlineButton.setChecked(self.ui.canvas.fontUnderline())
-        self.ui.boldButton.setChecked(self.ui.canvas.fontWeight() == QFont.Bold)
+        self.italicsButton.setChecked(self.canvas.fontItalic())
+        self.underlineButton.setChecked(self.canvas.fontUnderline())
+        self.boldButton.setChecked(self.canvas.fontWeight() == QFont.Bold)
 
-        self.ui.leftAlign.setChecked(self.ui.canvas.alignment() == Qt.AlignLeft)
-        self.ui.centerAlign.setChecked(self.ui.canvas.alignment() == Qt.AlignCenter)
-        #self.ui.alignr_action.setChecked(self.canvas.alignment() == Qt.AlignRight)
-        self.ui.middleAlign.setChecked(self.ui.canvas.alignment() == Qt.AlignJustify)
+        self.leftAlign.setChecked(self.canvas.alignment() == Qt.AlignLeft)
+        self.centerAlign.setChecked(self.canvas.alignment() == Qt.AlignCenter)
+        self.rightAlign.setChecked(self.canvas.alignment() == Qt.AlignRight)
+        self.middleAlign.setChecked(self.canvas.alignment() == Qt.AlignJustify)
 
-        #self.ui.block_signals(self._format_actions, False)
+        #self.block_signals(self._format_actions, False)
 
 """
 WILL HAVE TO PUT THEM IN STACKED WIDGET TO WORK IN JUST ONE SCREEN
 class DrawScreen(QMainWindow):
     def __init__(self, *args, **kwargs):
         super(DrawScreen, self).__init__(*args, **kwargs)
-        uic.loadUi("draw2.ui", self)
+        uic.loadUi("draw2", self)
         self.show()
 """
 if __name__ == '__main__':
@@ -158,5 +165,4 @@ if __name__ == '__main__':
     app.setApplicationName("CloneNote")
 
     window = NewMain()
-    window.show()
     app.exec_()

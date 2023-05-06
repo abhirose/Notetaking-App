@@ -229,21 +229,6 @@ color: rgb(255, 255, 255);</string>
      <font/>
     </property>
    </widget>
-   <widget class="QSpinBox" name="fontSize">
-    <property name="geometry">
-     <rect>
-      <x>280</x>
-      <y>110</y>
-      <width>41</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>14</pointsize>
-     </font>
-    </property>
-   </widget>
    <widget class="QPushButton" name="fontColor">
     <property name="geometry">
      <rect>
@@ -585,6 +570,39 @@ background-color: rgb(234, 234, 234);</string>
     </property>
     <property name="text">
      <string>Created by Team Brute Force</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="fontSize">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>110</y>
+      <width>47</width>
+      <height>31</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="rightAlign">
+    <property name="geometry">
+     <rect>
+      <x>623</x>
+      <y>110</y>
+      <width>41</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+      <underline>false</underline>
+      <kerning>true</kerning>
+     </font>
+    </property>
+    <property name="text">
+     <string>RA</string>
+    </property>
+    <property name="flat">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>
